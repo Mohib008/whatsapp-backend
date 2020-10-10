@@ -12,8 +12,9 @@
   },
   "author": "Mohib Arsala",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Mohib008/whatsapp-backend/issues"
-  },
-  "homepage": "https://github.com/Mohib008/whatsapp-backend#readme"
+  "homepage": "https://github.com/Mohib008/whatsapp-backend#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.10.9"
+  }
 }
