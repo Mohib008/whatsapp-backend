@@ -1,0 +1,19 @@
+{
+  "name": "whatsapp-backend",
+  "version": "1.0.0",
+  "description": "NodeJs, Express & MongoDB",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mohib008/whatsapp-backend.git"
+  },
+  "author": "Mohib Arsala",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mohib008/whatsapp-backend/issues"
+  },
+  "homepage": "https://github.com/Mohib008/whatsapp-backend#readme"
+}
