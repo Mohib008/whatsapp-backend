@@ -2,11 +2,22 @@ import express from "express";
 import mongoose from "mongoose";
 import Messages from "./dbMessages.js";
 import Pusher from 'pusher';
+import cors from 'cors';
 
+
+const port = process.env.PORT || 3000;
 
 // App config
 const app = express();
-const port = process.env.PORT || 3000;
+
+// For security
+app.use(cors());
+
+/*app.use((req, res, next) => {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Header", "*");
+    next();
+});*/
 
 const pusher = new Pusher({
     appId: '1088700',
@@ -23,7 +34,7 @@ app.use(express.json());
 
 // DB config
 
-const connection_url = "mongodb+srv://Arsala:wwc41FckwBYvKrDE@cluster0.7xmjw.mongodb.net/whatsappdb?retryWrites=true&w=majority"
+const connection_url = "mongodb+srv://Arsala:wwc41FckwBYvKrDE@cluster0.7xmjw.mongodb.net/whatsapp?retryWrites=true&w=majority"
 
 mongoose.connect(connection_url,{
     useCreateIndex: true,
@@ -36,6 +47,20 @@ db.once('open', () => {
     console.log("Db is connected!");
     const msgCollection = db.collection('messagecontents');
     const changeStream = msgCollection.watch();
+
+    changeStream.on("change", (change) => {
+        console.log("A change accured", change);
+
+        if(change.operationType === 'insert') {
+            const messageDetails = change.fullDocument;
+            pusher.trigger('messages', 'inserted', {
+                name: messageDetails.user,
+                message: messageDetails.message
+            });
+        } else {
+            console.log('Error triggering Pusher');
+        }
+    });
 });
 
 
