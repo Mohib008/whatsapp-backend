@@ -5,7 +5,7 @@ import Pusher from 'pusher';
 import cors from 'cors';
 
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 9000;
 
 // App config
 const app = express();
@@ -55,7 +55,8 @@ db.once('open', () => {
             const messageDetails = change.fullDocument;
             pusher.trigger('messages', 'inserted', {
                 name: messageDetails.user,
-                message: messageDetails.message
+                message: messageDetails.message,
+                timestamp:messageDetails.timestamp,
             });
         } else {
             console.log('Error triggering Pusher');
